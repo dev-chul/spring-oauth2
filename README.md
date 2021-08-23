@@ -1,4 +1,4 @@
-# spring-oauth2-example
+# spring-oauth2
 
 Spring 5.0 이하는 오히려 문제가 없지만, 5.0 사용 시 문제가 되는 부분까지 수정한 버전
 * Fork한 lostjc001/spring-example의 자료를 "MyBatis의 Mapper&Interface"로 적용한 버전
