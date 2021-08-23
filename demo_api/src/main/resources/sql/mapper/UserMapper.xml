@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.UserMapper">
+  	<select id="getUserById" resultType="com.example.demo.vo.OAuthUserDetails">
+		<![CDATA[
+		SELECT
+		    username
+		    ,	password
+		    ,	enabled
+		    ,	authority
+		    ,	account_non_expired as accountNonExpired
+		    ,	account_non_locked as accountNonLocked
+		    ,	credentials_non_expired as credentialsNonExpired
+		    ,	name
+		FROM
+		    oauth_user_details
+		WHERE
+		    username = #{username}
+		]]>
+	</select>
+</mapper>

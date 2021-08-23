@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.JwtMapper">
+  	<select id="getUserById" resultType="com.example.demo.vo.JwtUserDetails">
+		<![CDATA[
+		SELECT
+		    username
+		    ,	password
+		FROM
+		    oauth_user_details
+		WHERE
+		    username = #{username}
+		]]>
+	</select>
+</mapper>
