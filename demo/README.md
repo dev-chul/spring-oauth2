@@ -1,16 +1,48 @@
-# spring-oauth2<br>
-**! 폴더명에 속지 마라... 실수로 boot가 필요없는 프로젝트에 boot를 붙였고, 수정 예정이다.**
+# 1. spring-oauth2 > demo App <br>
+**! Spring Security와 Oauth 2.0을 이용한 인증 서버 초기 예시이다.**<br>
 
-+ Spring 5.0 이하는 오히려 문제가 없지만, 5.0 사용 시 문제가 되는 부분까지 수정한 버전<br>
-    > Fork한 lostjc001/spring-example의 자료를 "MyBatis의 Mapper&Interface"로 적용한 버전<br>
-    > CrossOriginFilter를 통해 CORS 이슈까지 적용한 버전
+# 토큰 요청
+Request URL : 127.0.0.1:[포트]/oauth/token<br>
+Header<br>
 
-# 2021-01-11
-+ demo_boot_jwt 및 demo_boot_jw_api 프로젝트는 boot를 최소화하고 jwt 라이브러리를 이용한 버전<br>
-    > 필터를 이용하여 권한을 검증하는 버전<br>
-    > jwt 라이브러리에 RSA 인증까지 적용한 
+    authorization : Basic Y2xpZW50OnNlY3JldA==
+	
+    Content-Type : application/x-www-form-urlencoded
+	
+Body(raw)<br>
 
-# 2021-09-29
-+ STS + opnjdk 1.8에서 실행 시 주의할 점<br>
-    > java 버전으로 인해 --add-opens java.base/java.lang=ALL-UNNAMED jvm 옵션을 주어야 한다.<br>
-    > 실행 인스턴스 우클릭 > Open Config > Spring boot App > 실행 인스턴스 선택 > Arguments > Vm arguments에 "--add-opens java.base/java.lang=ALL-UNNAMED" 추가
+    grant_type=password&username=user&password=pass&scope=read_profile&
+	
+Result<br>
+
+    {
+	
+        "access_token": "1c3798a0-cfcb-47a3-9436-2efe716531c6",
+		
+        "token_type": "bearer",
+		
+        "refresh_token": "15160731-f413-4119-bc3a-985d40b63597",
+		
+        "expires_in": 35999,
+		
+        "scope": "read_profile"
+		
+    }
+	
+# 2. authorization의 Y2xpZW50OnNlY3JldA== 값은 어디서?
+**아래서 조합 후 Base64 인코드를 통해 관리된다.**
+```java
+    private static void makeAuthorizationRequestHeader() {
+        String oauthClientId = "client";
+        String oauthClientSecret = "secret";
+
+        Encoder encoder = Base64.getEncoder();
+        try {
+            String toEncodeString = String.format("%s:%s", oauthClientId, oauthClientSecret);
+            String authorizationRequestHeader = "Basic " + encoder.encodeToString(toEncodeString.getBytes("UTF-8"));
+            log.debug("AuthorizationRequestHeader : [{}] ", authorizationRequestHeader);            // Y2xpZW50OnNlY3JldA==
+        } catch (UnsupportedEncodingException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+```
