@@ -14,3 +14,6 @@
 + STS + opnjdk 1.8에서 실행 시 주의할 점<br>
     > java 버전으로 인해 --add-opens java.base/java.lang=ALL-UNNAMED jvm 옵션을 주어야 한다.<br>
     > 실행 인스턴스 우클릭 > Open Config > Spring boot App > 실행 인스턴스 선택 > Arguments > Vm arguments에 "--add-opens java.base/java.lang=ALL-UNNAMED" 추가
+
+# 2022-02-27
++ STS 다운로드 받았을 때 현재 java 16 보안이슈로 java 11을 직접 다운로드 받아 실행해야 에러가 안난다.<br>
